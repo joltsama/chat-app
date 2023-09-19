@@ -1,13 +1,12 @@
 "use client";
 
+import { IChat, IMessage } from "@/schemas";
 import clsx from "clsx";
 import { useState } from "react";
-import { IChat, IMessage } from "@/schemas";
+import ChatInputForm from "./ChatInputForm";
+import Header from "./Header";
 import MessageBox from "./MessageBox";
 import ThreadWindow from "./ThreadWindow";
-import MessageInput from "./MessageInput";
-import { LuSendHorizonal } from "react-icons/lu";
-import Header from "./Header";
 
 interface ChatWindowProps {
   initialChat: IChat & { messages: IMessage[] };
@@ -15,7 +14,6 @@ interface ChatWindowProps {
 
 function ChatWindow({ initialChat }: ChatWindowProps) {
   const userId = "user1";
-  console.log("initialChat", initialChat);
 
   const [showThread, setShowThread] = useState(false);
   const [threadParentMessage, setThreadParentMessage] = useState<IMessage>();
@@ -34,11 +32,8 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
     setShowThread(value);
   };
 
-  const onSubmit = (e: any) => {
-    const data = new FormData(e.target);
-    e.target.reset();
-    e.preventDefault();
-    const messageBody: string = data.get("message")?.toString() || "";
+  const onSubmit = (data: { message: string }) => {
+    const messageBody: string = data.message;
     setActiveChat((prev) => {
       const previousMessages = [...prev?.messages!];
       previousMessages.push({
@@ -90,15 +85,10 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
 
         {/* Message Input and Send Button  */}
         <div>
-          <form className="p-4 pl-20 w-full inline-flex" onSubmit={onSubmit}>
-            <MessageInput id="mainMessageInput" />
-            <button
-              type="submit"
-              className="dark:bg-stone-700 dark:text-white w-10 rounded-md text-center px-3"
-            >
-              <LuSendHorizonal size="1rem" />
-            </button>
-          </form>
+          <ChatInputForm
+            className="py-6 pl-20 pr-12 w-full inline-flex"
+            onSubmit={onSubmit}
+          />
         </div>
       </div>
       {showThread && (

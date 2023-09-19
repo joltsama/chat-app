@@ -2,10 +2,9 @@
 
 import getThread from "@/actions/getThread";
 import { IMessage, IThread } from "@/schemas";
-import React, { useEffect, useState } from "react";
-import { LuSendHorizonal } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import ChatInputForm from "./ChatInputForm";
 import MessageBox from "./MessageBox";
-import MessageInput from "./MessageInput";
 
 interface ThreadWindowProps {
   initialMessage: IMessage;
@@ -42,11 +41,8 @@ function ThreadWindow({
     }
   }, [threadId]);
 
-  const onSubmit = (e: any) => {
-    const data = new FormData(e.target);
-    e.target.reset();
-    e.preventDefault();
-    const messageBody: string = data.get("message")?.toString() || "";
+  const onSubmit = (data: { message: string }) => {
+    const messageBody: string = data.message;
     setThread((prev) => {
       const previousMessages = [...prev?.messages!];
       previousMessages.push({
@@ -69,32 +65,29 @@ function ThreadWindow({
   };
 
   return (
-    <div className="border-l h-full p-4 ">
+    <div className="border-l h-full">
       <button className="float-right" onClick={onClose}>
         X
       </button>
       <div className="h-full flex flex-col">
-        <div className="text-lg font-medium my-2">
+        {/* Heading */}
+        <div className="text-lg font-medium my-2 pt-4 px-4">
           {threadId ? "Thread" : "Create a thread"}
         </div>
-        <div className="flex-1 overflow-y-auto">
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto p-4 pt-0">
           <MessageBox message={initialMessage} inThread />
           <hr className="my-4" />
           {thread?.messages?.map((message) => (
             <MessageBox key={message.id} message={message} inThread />
           ))}
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="inline-flex w-full">
-            <MessageInput id="threadMessageInput" />
-            <button
-              type="submit"
-              className={"dark:bg-cyan-950 dark:text-white p-2 rounded-sm"}
-            >
-              <LuSendHorizonal />
-            </button>
-          </div>
-        </form>
+
+        <ChatInputForm
+          className="py-6 pl-20 pr-12 w-full inline-flex"
+          onSubmit={onSubmit}
+        />
       </div>
     </div>
   );
