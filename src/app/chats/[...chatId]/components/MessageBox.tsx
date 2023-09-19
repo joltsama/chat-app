@@ -6,6 +6,7 @@ import ThreadReplyMenu from "./ThreadReplyMenu";
 import Avatar from "@/app/components/Avatar";
 import { IMessage } from "@/schemas";
 import { format } from "date-fns";
+import { GoReply } from "react-icons/go";
 
 interface MessageBoxProps {
   message: IMessage;
@@ -90,12 +91,23 @@ function MessageBox({
           </div>
           {!inThread && message.thread && (
             <button
-              className="ml-2 mt-1 text-sm font-medium text-stone-600 thread-replies hover:underline"
+              className="
+                mt-2 
+                text-sm 
+                font-medium 
+                text-red-500 
+                px-2 
+                thread-replies 
+                hover:underline 
+                inline-flex 
+                items-center
+              "
               onClick={() =>
                 onReply &&
                 onReply(true, message, message.thread.toString() || "")
               }
             >
+              <GoReply className="mr-2" size={16} />
               {threadLength} replies
             </button>
           )}
