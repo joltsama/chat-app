@@ -42,7 +42,7 @@ export default function UserChatItem({
         cursor-pointer
         mb-2
       `,
-        isOpen && "bg-stone-50"
+        isOpen && "bg-white"
       )}
     >
       <Avatar isGroup={isGroup} name={name} image={image} />
