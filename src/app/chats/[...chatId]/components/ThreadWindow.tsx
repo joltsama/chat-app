@@ -5,6 +5,7 @@ import { IMessage, IThread } from "@/schemas";
 import { useEffect, useState } from "react";
 import ChatInputForm from "./ChatInputForm";
 import MessageBox from "./MessageBox";
+import { RxCross2 } from "react-icons/rx";
 
 interface ThreadWindowProps {
   initialMessage: IMessage;
@@ -78,7 +79,7 @@ function ThreadWindow({
     <div className="border-l h-full">
       <div className="h-full flex flex-col">
         {/* Heading */}
-        <div className="inline-flex items-center my-4 px-4">
+        <div className="inline-flex items-center my-4 px-4 py-2">
           <span className="text-lg font-medium ">
             {threadId ? "Thread" : "Create a thread"}
           </span>
@@ -86,7 +87,7 @@ function ThreadWindow({
             className="ml-auto text-2xl rounded-full p-2 hover:bg-stone-200"
             onClick={onClose}
           >
-            &times;
+            <RxCross2 size={18} />
           </button>
         </div>
 
