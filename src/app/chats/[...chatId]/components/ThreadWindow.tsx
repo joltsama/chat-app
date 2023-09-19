@@ -27,6 +27,9 @@ function ThreadWindow({
     beginningMessageId: initialMessage.id,
     createdAt: new Date(),
   });
+  const [windowState, setWindowState] = useState<"CREATING" | "VIEWING">(
+    "VIEWING"
+  );
 
   useEffect(() => {
     console.log("threadId", threadId);
@@ -46,7 +49,7 @@ function ThreadWindow({
         createdAt: new Date(),
       });
     }
-  }, [threadId]);
+  }, [threadId, initialMessage.id]);
 
   const onSubmit = (data: { message: string }) => {
     const messageBody: string = data.message;
@@ -73,13 +76,18 @@ function ThreadWindow({
 
   return (
     <div className="border-l h-full">
-      <button className="float-right" onClick={onClose}>
-        X
-      </button>
       <div className="h-full flex flex-col">
         {/* Heading */}
-        <div className="text-lg font-medium my-2 pt-4 px-4">
-          {threadId ? "Thread" : "Create a thread"}
+        <div className="inline-flex items-center my-4 px-4">
+          <span className="text-lg font-medium ">
+            {threadId ? "Thread" : "Create a thread"}
+          </span>
+          <button
+            className="ml-auto text-2xl rounded-full p-2 hover:bg-stone-200"
+            onClick={onClose}
+          >
+            &times;
+          </button>
         </div>
 
         {/* Body */}
