@@ -34,10 +34,10 @@ function Header({ chat }: HeaderProps) {
           <div className="text-stone-900">{otherUser[0].name}</div>
         )}
       </div>
-      <button className="hover:bg-stone-200 p-2 rounded-full ml-auto text-stone-900">
+      <button className="hover:bg-stone-200 p-2 rounded-full ml-auto text-stone-900 transition">
         <IoIosCall size={20} />
       </button>
-      <button className="hover:bg-stone-200 p-2 rounded-full ml-2 text-stone-900">
+      <button className="hover:bg-stone-200 p-2 rounded-full ml-2 text-stone-900 transition">
         <BsThreeDotsVertical size={20} />
       </button>
     </div>

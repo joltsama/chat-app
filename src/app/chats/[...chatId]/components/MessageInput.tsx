@@ -30,6 +30,7 @@ function MessageInput({
       "
       {...register(id, { required })}
       id={id}
+      autoComplete={id}
       type={type || "text"}
       placeholder={placeholder || "Type message here..."}
     />

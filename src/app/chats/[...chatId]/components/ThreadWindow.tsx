@@ -2,7 +2,7 @@
 
 import getThread from "@/actions/getThread";
 import { IMessage, IThread } from "@/schemas";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatInputForm from "./ChatInputForm";
 import MessageBox from "./MessageBox";
 import { RxCross2 } from "react-icons/rx";
@@ -32,6 +32,8 @@ function ThreadWindow({
     "VIEWING"
   );
 
+  const bottomRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     console.log("threadId", threadId);
     const fetchMessages = async () => {
@@ -50,6 +52,8 @@ function ThreadWindow({
         createdAt: new Date(),
       });
     }
+
+    bottomRef.current?.scrollIntoView();
   }, [threadId, initialMessage.id]);
 
   const onSubmit = (data: { message: string }) => {
@@ -73,6 +77,8 @@ function ThreadWindow({
         messages: previousMessages,
       };
     });
+
+    bottomRef.current?.scrollIntoView();
   };
 
   return (
@@ -106,6 +112,7 @@ function ThreadWindow({
               inThread
             />
           ))}
+          <div className="pt-8" ref={bottomRef} />
         </div>
 
         <ChatInputForm

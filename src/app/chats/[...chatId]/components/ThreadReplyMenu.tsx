@@ -15,8 +15,21 @@ export default function ThreadReplyMenu({
       type="button"
       onClick={onClick}
       className={clsx(
-        "rounded-full absolute border-2 px-2 py-1 hover:bg-stone-200  align-top ml-[-1.75rem]",
-        "text-sm bg-stone-100 text-stone-700  cursor-pointer ml-2 hidden",
+        `
+        absolute
+        top-1
+        rounded-full 
+        border-2 
+        px-2 
+        py-1
+        ml-[-1.75rem]
+        text-sm
+        cursor-pointer 
+        hidden
+        text-stone-700  
+        bg-stone-100
+        hover:bg-stone-200 align-top 
+        `,
         own && "text-right"
       )}
     >

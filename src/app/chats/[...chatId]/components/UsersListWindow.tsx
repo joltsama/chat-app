@@ -7,7 +7,7 @@ interface UsersListWindowProps {
 
 export default function UsersListWindow({ chats }: UsersListWindowProps) {
   return (
-    <div className="bg-cyan-100 p-2 min-h-screen">
+    <div className="bg-cyan-100 p-4 min-h-screen">
       {chats.map((chat: any, index: number) => (
         <Link href={`/chats/${chat.id}`} key={chat.id}>
           <UserChatItem

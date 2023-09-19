@@ -2,7 +2,7 @@
 
 import { IChat, IMessage } from "@/schemas";
 import clsx from "clsx";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChatInputForm from "./ChatInputForm";
 import Header from "./Header";
 import MessageBox from "./MessageBox";
@@ -15,12 +15,17 @@ interface ChatWindowProps {
 function ChatWindow({ initialChat }: ChatWindowProps) {
   const userId = "user1";
 
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [showThread, setShowThread] = useState(false);
   const [threadParentMessage, setThreadParentMessage] = useState<IMessage>();
   const [activeThreadId, setActiveThreadId] = useState("");
   const [activeChat, setActiveChat] = useState<
     IChat & { messages: IMessage[] }
   >(initialChat);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView();
+  }, []);
 
   const handleThreadToggle = (
     value: boolean,
@@ -53,6 +58,8 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
         messages: previousMessages,
       };
     });
+
+    bottomRef?.current?.scrollIntoView();
   };
 
   return (
@@ -81,6 +88,7 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
               onReply={handleThreadToggle}
             />
           ))}
+          <div className="pt-8" ref={bottomRef} />
         </div>
 
         {/* Message Input and Send Button  */}

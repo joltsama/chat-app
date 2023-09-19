@@ -41,6 +41,7 @@ export default function UserChatItem({
         hover:bg-white
         cursor-pointer
         mb-2
+        transition
       `,
         isOpen && "bg-white"
       )}

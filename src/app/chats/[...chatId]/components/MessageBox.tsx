@@ -33,6 +33,10 @@ function MessageBox({
     e.currentTarget.lastElementChild?.classList.add("hidden");
   };
 
+  const handleThread = (data: any) => {
+    console.log("data", data);
+  };
+
   return (
     <div className={clsx(chainMessages ? "mt-2" : "mt-4")}>
       <div className={"inline-flex"}>
@@ -66,9 +70,10 @@ function MessageBox({
                 py-1 
                 px-2
                 mr-8
+                
               `,
                 isOwn ? "bg-orange-100" : "bg-cyan-200",
-                chainMessages && "ml-16"
+                chainMessages ? "ml-16" : "mt-1"
               )}
             >
               {message.body}
