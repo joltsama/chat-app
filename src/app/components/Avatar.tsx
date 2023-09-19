@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { HiMiniUserGroup } from "react-icons/hi2";
+import { HiOutlineUserGroup } from "react-icons/hi2";
 
 interface AvatarProps {
   name: string;
@@ -31,7 +31,7 @@ export default function Avatar({ image, name, isGroup }: AvatarProps) {
         `}
         >
           {isGroup ? (
-            <HiMiniUserGroup size={34} />
+            <HiOutlineUserGroup size={34} />
           ) : (
             name.slice(0, 2).toUpperCase()
           )}
