@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { HiReply } from "react-icons/hi";
+import { MdOutlineQuickreply } from "react-icons/md";
 
 interface ThreadReplyMenuProps {
   own?: boolean;
@@ -15,12 +15,12 @@ export default function ThreadReplyMenu({
       type="button"
       onClick={onClick}
       className={clsx(
-        "rounded-full absolute border p-1 hover:bg-stone-200  align-top ml-[-1.75rem]",
-        "text-sm bg-stone-100 text-stone-500  cursor-pointer ml-2 hidden",
+        "rounded-full absolute border-2 px-2 py-1 hover:bg-stone-200  align-top ml-[-1.75rem]",
+        "text-sm bg-stone-100 text-stone-700  cursor-pointer ml-2 hidden",
         own && "text-right"
       )}
     >
-      <HiReply size={20} />
+      <MdOutlineQuickreply size={16} />
     </button>
   );
 }

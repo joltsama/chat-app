@@ -53,6 +53,7 @@ function MessageBox({
             </div>
           )}
           <div
+            className="relative"
             {...(!inThread && {
               onMouseOver: onMouseOver,
               onMouseOut: onMouseOut,
@@ -66,7 +67,6 @@ function MessageBox({
                 inline-flex
                 py-1 
                 px-2
-                relative
                 mr-8
               `,
                 isOwn ? "bg-orange-100" : "bg-cyan-200",
