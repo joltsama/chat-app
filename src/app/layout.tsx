@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Chat App",
-  description: "Chat with Threads",
+  description: "Chat app with thread view",
 };
 
 export default async function RootLayout({
@@ -17,11 +17,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="h-full">
-          {/* <div className="fixed left-0 w-80"></div>
-          <div className="pl-80 h-full"></div> */}
-          {children}
-        </main>
+        <main className="h-full">{children}</main>
       </body>
     </html>
   );

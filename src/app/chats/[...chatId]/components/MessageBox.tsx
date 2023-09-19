@@ -1,30 +1,31 @@
 "use client";
 
 import clsx from "clsx";
-import React, { MouseEvent } from "react";
-import ThreadReplyMenu from "./ThreadReplyMenu";
-import Avatar from "@/app/components/Avatar";
 import { IMessage } from "@/schemas";
 import { format } from "date-fns";
+import { MouseEvent } from "react";
 import { GoReply } from "react-icons/go";
+import Avatar from "@/app/components/Avatar";
+import MessageHoverMenu from "./MessageHoverMenu";
+import useCurrentUser from "@/app/hooks/useCurrentUser";
 
 interface MessageBoxProps {
   message: IMessage;
-  chainMessages?: boolean;
+  sameSender?: boolean;
   inThread?: boolean;
   onReply?: (value: boolean, message: IMessage, threadId: string) => void;
 }
 
 function MessageBox({
   message,
-  chainMessages = false,
+  sameSender = false,
   inThread = false,
   onReply,
 }: MessageBoxProps) {
-  const userId = "user1";
+  // hard coded, can be fetched from server
+  const threadSize = 10;
+  const { id: userId } = useCurrentUser();
   const isOwn = message.sender.id === userId;
-  // can be fetched from server
-  const threadLength = 10;
 
   const onMouseOver = (e: MouseEvent) => {
     e.currentTarget.lastElementChild?.classList.remove("hidden");
@@ -34,18 +35,15 @@ function MessageBox({
     e.currentTarget.lastElementChild?.classList.add("hidden");
   };
 
-  const handleThread = (data: any) => {
-    console.log("data", data);
-  };
-
   return (
-    <div className={clsx(chainMessages ? "mt-2" : "mt-4")}>
-      <div className={"inline-flex"}>
-        {!chainMessages && (
+    <div className={clsx(sameSender ? "pt-1" : "mt-4")}>
+      <div className="inline-flex">
+        {!sameSender && (
           <Avatar name={message.sender.name} image={message.sender.image} />
         )}
+
         <div>
-          {!chainMessages && (
+          {!sameSender && (
             <div>
               <span className="font-semibold text-stone-950">
                 {message.sender.name}
@@ -55,8 +53,9 @@ function MessageBox({
               </span>
             </div>
           )}
+
           <div
-            className="relative"
+            className={clsx("relative", sameSender ? "ml-16 mt-0" : "mt-1")}
             {...(!inThread && {
               onMouseOver: onMouseOver,
               onMouseOut: onMouseOut,
@@ -65,33 +64,33 @@ function MessageBox({
             <div
               className={clsx(
                 `
-                w-fit
-                rounded-md
-                inline-flex
-                py-1 
-                px-2
-                mr-8
-                
-              `,
-                isOwn ? "bg-orange-100" : "bg-cyan-200",
-                chainMessages ? "ml-16" : "mt-1"
+                  w-fit
+                  rounded-md
+                  inline-flex
+                  py-1 
+                  px-2
+                  mr-8
+                  `,
+                isOwn ? "bg-orange-100" : "bg-cyan-200"
               )}
             >
               {message.body}
             </div>
-            {!inThread && (
-              <ThreadReplyMenu
+
+            {!inThread && onReply && (
+              <MessageHoverMenu
                 own={isOwn}
                 onClick={() =>
-                  onReply &&
                   onReply(true, message, message.thread.toString() || "")
                 }
               />
             )}
           </div>
+
           {!inThread && message.thread && (
             <button
-              className="
+              className={clsx(
+                `
                 mt-2 
                 text-sm 
                 font-medium 
@@ -101,14 +100,16 @@ function MessageBox({
                 hover:underline 
                 inline-flex 
                 items-center
-              "
+                `,
+                sameSender && "ml-16"
+              )}
               onClick={() =>
                 onReply &&
                 onReply(true, message, message.thread.toString() || "")
               }
             >
               <GoReply className="mr-2" size={16} />
-              {threadLength} replies
+              {threadSize} replies
             </button>
           )}
         </div>

@@ -8,13 +8,11 @@ interface ChatInputFormProps {
   className?: string;
 }
 
-function ChatInputForm({ onSubmit, className }: ChatInputFormProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<FieldValues>({
+export default function ChatInputForm({
+  onSubmit,
+  className,
+}: ChatInputFormProps) {
+  const { register, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       message: "",
     },
@@ -33,5 +31,3 @@ function ChatInputForm({ onSubmit, className }: ChatInputFormProps) {
     </form>
   );
 }
-
-export default ChatInputForm;

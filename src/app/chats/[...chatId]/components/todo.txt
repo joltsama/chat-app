@@ -1,4 +1,0 @@
-Show thread in chat window also
-Group Chat
-Reply button position
-Responsive

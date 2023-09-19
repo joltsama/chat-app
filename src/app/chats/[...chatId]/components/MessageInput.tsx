@@ -23,7 +23,8 @@ function MessageInput({
         w-full 
         ring-inset 
         ring-1 
-        ring-stone-600 
+        ring-stone-300 
+        focus:outline-0
         py-2 
         px-4 
         rounded-l-md

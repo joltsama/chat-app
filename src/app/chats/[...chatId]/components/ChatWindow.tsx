@@ -13,9 +13,8 @@ interface ChatWindowProps {
 }
 
 function ChatWindow({ initialChat }: ChatWindowProps) {
-  const userId = "user1";
-
   const bottomRef = useRef<HTMLDivElement>(null);
+
   const [showThread, setShowThread] = useState(false);
   const [threadParentMessage, setThreadParentMessage] = useState<IMessage>();
   const [activeThreadId, setActiveThreadId] = useState("");
@@ -24,12 +23,13 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
   >(initialChat);
 
   useEffect(() => {
+    // scroll to bottom on view initiation
     bottomRef.current?.scrollIntoView();
   }, []);
 
   const handleThreadToggle = (
     value: boolean,
-    message: IMessage | undefined,
+    message: IMessage,
     threadId: string = ""
   ) => {
     setThreadParentMessage(message);
@@ -38,10 +38,14 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
   };
 
   const onSubmit = (data: { message: string }) => {
+    // store messages locally
     const messageBody: string = data.message;
     setActiveChat((prev) => {
-      const previousMessages = [...prev?.messages!];
+      const previousMessages = [
+        ...prev?.messages!.slice(0, prev?.messages!.length),
+      ];
       previousMessages.push({
+        // assign a custom local id
         id: `message1.1.${previousMessages.length + 1}`,
         seenBy: [],
         body: messageBody,
@@ -59,7 +63,26 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
       };
     });
 
+    // scroll to bottom
     bottomRef?.current?.scrollIntoView();
+  };
+
+  // Temporary solution to mark messages which have threads
+  const setThreadOnMessage = (message: IMessage) => {
+    setActiveChat((prev) => {
+      const previousMessages = [
+        ...prev?.messages!.slice(0, prev?.messages!.length),
+      ];
+      const msgToUpdateIndex = previousMessages.findIndex(
+        (msg) => msg.id === message.id
+      );
+
+      previousMessages[msgToUpdateIndex].thread = activeChat.id + message.id;
+      return {
+        ...prev!,
+        messages: previousMessages,
+      };
+    });
   };
 
   return (
@@ -79,13 +102,13 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
         <div className="p-4 flex-1 overflow-y-auto">
           {activeChat.messages.map((message, index) => (
             <MessageBox
-              chainMessages={
-                index > 0 &&
-                activeChat.messages[index - 1].sender.id === message.sender.id
-              }
-              message={message}
               key={message.id}
+              message={message}
               onReply={handleThreadToggle}
+              sameSender={
+                index > 0 &&
+                message.sender.id === activeChat.messages[index - 1].sender.id
+              }
             />
           ))}
           <div className="pt-8" ref={bottomRef} />
@@ -105,6 +128,7 @@ function ChatWindow({ initialChat }: ChatWindowProps) {
             onClose={() => setShowThread(false)}
             threadId={activeThreadId}
             initialMessage={threadParentMessage!}
+            setThreadOnMessage={setThreadOnMessage}
           />
         </div>
       )}

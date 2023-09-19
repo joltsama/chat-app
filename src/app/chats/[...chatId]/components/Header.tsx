@@ -1,25 +1,20 @@
-import { IChat, IUser } from "@/schemas";
-import { IoIosCall } from "react-icons/io";
+import useCurrentUser from "@/app/hooks/useCurrentUser";
+import useOtherUsers from "@/app/hooks/useOtherUsers";
+import { IChat } from "@/schemas";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoIosCall } from "react-icons/io";
 import Avatar from "../../../components/Avatar";
 
 interface HeaderProps {
   chat: IChat;
 }
 
-const getOtherUsers = (me: IUser, users: IUser[]): IUser[] => {
-  const otherUsers = users.filter((user) => user.id !== me.id);
-  return otherUsers;
-};
-
 function Header({ chat }: HeaderProps) {
-  const user: IUser = {
-    id: "user1",
-    name: "",
-  };
-  const { id, title, users, description, isGroup } = chat;
-  // @ts-ignore
-  const otherUser = getOtherUsers(user, users);
+  const { title, users, isGroup } = chat;
+
+  const user = useCurrentUser();
+  const otherUser = useOtherUsers(user, users);
+
   return (
     <div className="my-4 px-4 inline-flex items-center w-full">
       <Avatar

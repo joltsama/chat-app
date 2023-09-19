@@ -4,7 +4,6 @@ import getAllChats from "@/actions/getAllChats";
 
 async function ChatLayout({ children }: { children: React.ReactNode }) {
   const userChats = await getAllChats();
-  console.log("userChats", userChats);
 
   return (
     <div className="h-full">

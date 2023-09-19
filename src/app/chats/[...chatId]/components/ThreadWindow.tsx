@@ -11,6 +11,7 @@ interface ThreadWindowProps {
   initialMessage: IMessage;
   threadId?: string;
   onClose: () => void;
+  setThreadOnMessage: (_: IMessage) => void;
 }
 
 type FullThread = IThread & {
@@ -21,6 +22,7 @@ function ThreadWindow({
   initialMessage,
   threadId,
   onClose,
+  setThreadOnMessage,
 }: ThreadWindowProps) {
   const [thread, setThread] = useState<FullThread>({
     id: "",
@@ -28,9 +30,6 @@ function ThreadWindow({
     beginningMessageId: initialMessage.id,
     createdAt: new Date(),
   });
-  const [windowState, setWindowState] = useState<"CREATING" | "VIEWING">(
-    "VIEWING"
-  );
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +58,10 @@ function ThreadWindow({
   const onSubmit = (data: { message: string }) => {
     const messageBody: string = data.message;
     setThread((prev) => {
-      const previousMessages = [...prev?.messages!];
+      // const previousMessages = [...prev?.messages!];
+      const previousMessages = [
+        ...prev?.messages!.slice(0, prev?.messages!.length),
+      ];
       previousMessages.push({
         id: `message1.1.${previousMessages.length + 1}`,
         seenBy: [],
@@ -78,6 +80,8 @@ function ThreadWindow({
       };
     });
 
+    setThreadOnMessage(initialMessage);
+
     bottomRef.current?.scrollIntoView();
   };
 
@@ -86,9 +90,7 @@ function ThreadWindow({
       <div className="h-full flex flex-col">
         {/* Heading */}
         <div className="inline-flex items-center my-4 px-4 py-2">
-          <span className="text-lg font-medium ">
-            {threadId ? "Thread" : "Create a thread"}
-          </span>
+          <span className="text-lg font-medium ">Thread</span>
           <button
             className="ml-auto text-2xl rounded-full p-2 hover:bg-stone-200"
             onClick={onClose}
@@ -103,7 +105,7 @@ function ThreadWindow({
           <hr className="my-4" />
           {thread?.messages?.map((message, index) => (
             <MessageBox
-              chainMessages={
+              sameSender={
                 index > 0 &&
                 thread.messages[index - 1].sender.id === message.sender.id
               }

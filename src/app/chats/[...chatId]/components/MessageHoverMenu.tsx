@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import { MdOutlineQuickreply } from "react-icons/md";
 
-interface ThreadReplyMenuProps {
+interface MessageHoverMenuProps {
   own?: boolean;
   onClick: () => void;
 }
 
-export default function ThreadReplyMenu({
+export default function MessageHoverMenu({
   own,
   onClick,
-}: ThreadReplyMenuProps) {
+}: MessageHoverMenuProps) {
   return (
     <button
       type="button"
@@ -17,7 +17,6 @@ export default function ThreadReplyMenu({
       className={clsx(
         `
         absolute
-        top-1
         rounded-full 
         border-2 
         px-2 

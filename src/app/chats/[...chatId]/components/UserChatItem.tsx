@@ -1,6 +1,8 @@
 "use client";
 
 import Avatar from "@/app/components/Avatar";
+import useCurrentUser from "@/app/hooks/useCurrentUser";
+import useOtherUsers from "@/app/hooks/useOtherUsers";
 import { IMessage, IUser } from "@/schemas";
 import clsx from "clsx";
 import { format } from "date-fns";
@@ -8,17 +10,12 @@ import { useParams } from "next/navigation";
 
 interface UserChatItemProps {
   title: string;
-  users: string;
+  users: IUser[];
   chatId: string;
   lastMessage: IMessage;
   image?: string;
   isGroup?: boolean;
 }
-
-const getOtherUsers = (me: IUser, users: IUser[]): IUser[] => {
-  const otherUsers = users.filter((user) => user.id !== me.id);
-  return otherUsers;
-};
 
 export default function UserChatItem({
   title,
@@ -28,18 +25,11 @@ export default function UserChatItem({
   lastMessage,
   isGroup,
 }: UserChatItemProps) {
-  console.log("title", title);
-  const user: IUser = {
-    id: "user1",
-    name: "",
-  };
-  // @ts-ignore
-  const otherUser = getOtherUsers(user, users);
-
   const params = useParams();
-  const openChatId = params.chatId[0];
-  console.log("[UserChatItem] chatId", openChatId);
+  const user = useCurrentUser();
+  const otherUser = useOtherUsers(user, users);
 
+  const openChatId = params.chatId[0];
   const isOpen = openChatId === chatId;
 
   return (
@@ -48,7 +38,7 @@ export default function UserChatItem({
         `
         relative
         inline-flex
-        rounded-md
+        rounded-l-md
         px-4
         py-2 
         w-full 

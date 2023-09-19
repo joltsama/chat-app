@@ -1,4 +1,3 @@
-import db from "@/temp-db";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
@@ -71,11 +70,4 @@ export async function GET(request: NextApiRequest, { params }: any) {
       ],
     });
   return NextResponse.json({});
-}
-
-export async function POST(request: NextApiRequest, { params }: any) {
-  // we will use params to access the data passed to the dynamic route
-  const { threadId } = params;
-  db.push(`/threads/${threadId}`, request.body);
-  return NextResponse.json(`Data saved`);
 }
