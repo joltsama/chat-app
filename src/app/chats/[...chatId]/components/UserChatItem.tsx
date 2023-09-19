@@ -1,26 +1,41 @@
 "use client";
 
 import Avatar from "@/app/components/Avatar";
-import { IMessage } from "@/schemas";
+import { IMessage, IUser } from "@/schemas";
 import clsx from "clsx";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 
 interface UserChatItemProps {
-  name: string;
+  title: string;
+  users: string;
   chatId: string;
   lastMessage: IMessage;
   image?: string;
   isGroup?: boolean;
 }
 
+const getOtherUsers = (me: IUser, users: IUser[]): IUser[] => {
+  const otherUsers = users.filter((user) => user.id !== me.id);
+  return otherUsers;
+};
+
 export default function UserChatItem({
-  name,
+  title,
+  users,
   chatId,
   image,
   lastMessage,
   isGroup,
 }: UserChatItemProps) {
+  console.log("title", title);
+  const user: IUser = {
+    id: "user1",
+    name: "",
+  };
+  // @ts-ignore
+  const otherUser = getOtherUsers(user, users);
+
   const params = useParams();
   const openChatId = params.chatId[0];
   console.log("[UserChatItem] chatId", openChatId);
@@ -46,9 +61,9 @@ export default function UserChatItem({
         isOpen && "bg-white"
       )}
     >
-      <Avatar isGroup={isGroup} name={name} image={image} />
+      <Avatar isGroup={isGroup} name={otherUser[0].name} image={image} />
       <div className="overflow-hidden">
-        <div className="font-medium">{name}</div>
+        <div className="font-medium">{isGroup ? title : otherUser[0].name}</div>
         <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-stone-600">
           {lastMessage.body}
         </div>

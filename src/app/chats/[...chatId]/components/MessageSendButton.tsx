@@ -6,12 +6,14 @@ function MessageSendButton() {
     <button
       type="submit"
       className="
+      rounded-r-md
+      text-center
+      px-3 
       dark:bg-stone-700
       dark:text-white w-10
       border-stone-600
-        rounded-r-md
-        text-center
-        px-3 transition
+      hover:bg-stone-900
+      transition
       "
     >
       <LuSendHorizonal size={16} />
