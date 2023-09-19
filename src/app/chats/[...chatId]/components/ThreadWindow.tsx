@@ -38,7 +38,15 @@ function ThreadWindow({
     const fetchMessages = async () => {
       const threadDetails: FullThread = await getThread(threadId!);
       console.log("threadDetails", threadDetails);
-      setThread(threadDetails);
+      // no thread details found then reset
+      setThread(
+        threadDetails || {
+          id: "",
+          messages: [],
+          beginningMessageId: initialMessage.id,
+          createdAt: new Date(),
+        }
+      );
     };
 
     if (threadId) {
@@ -74,6 +82,7 @@ function ThreadWindow({
           name: "John",
         },
       });
+      console.log("previousMessages", previousMessages);
       return {
         ...prev!,
         messages: previousMessages,

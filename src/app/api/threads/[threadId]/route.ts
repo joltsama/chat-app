@@ -69,5 +69,5 @@ export async function GET(request: NextApiRequest, { params }: any) {
         },
       ],
     });
-  return NextResponse.json({});
+  return NextResponse.json(null);
 }
