@@ -79,8 +79,16 @@ function ThreadWindow({
         <div className="flex-1 overflow-y-auto p-4 pt-0">
           <MessageBox message={initialMessage} inThread />
           <hr className="my-4" />
-          {thread?.messages?.map((message) => (
-            <MessageBox key={message.id} message={message} inThread />
+          {thread?.messages?.map((message, index) => (
+            <MessageBox
+              chainMessages={
+                index > 0 &&
+                thread.messages[index - 1].sender.id === message.sender.id
+              }
+              key={message.id}
+              message={message}
+              inThread
+            />
           ))}
         </div>
 
