@@ -45,7 +45,7 @@ export default function UserChatItem({
         isOpen && "bg-stone-50"
       )}
     >
-      <Avatar name={name} image={image} />
+      <Avatar isGroup={isGroup} name={name} image={image} />
       <div className="overflow-hidden">
         <div className="font-medium">{name}</div>
         <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-stone-600">

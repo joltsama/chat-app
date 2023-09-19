@@ -1,11 +1,13 @@
 import Image from "next/image";
+import { HiMiniUserGroup } from "react-icons/hi2";
 
 interface AvatarProps {
   name: string;
   image?: string;
+  isGroup?: boolean;
 }
 
-export default function Avatar({ image, name }: AvatarProps) {
+export default function Avatar({ image, name, isGroup }: AvatarProps) {
   return (
     <>
       {image ? (
@@ -13,22 +15,26 @@ export default function Avatar({ image, name }: AvatarProps) {
       ) : (
         <div
           className={`
-            border
-            flex
-            items-center
-            justify-center
-            h-12 
-            w-12 
-            min-w-[3rem]
-            mr-4 
-            rounded-full 
-            text-lg 
-            font-medium
-            bg-white 
-            text-cyan-900 
-          `}
+          border
+          flex
+          items-center
+          justify-center
+          h-12 
+          w-12 
+          min-w-[3rem]
+          mr-4 
+          rounded-full 
+          text-lg 
+          font-medium
+          bg-white 
+          text-cyan-900 
+        `}
         >
-          {name.slice(0, 2).toUpperCase()}
+          {isGroup ? (
+            <HiMiniUserGroup size={34} />
+          ) : (
+            name.slice(0, 2).toUpperCase()
+          )}
         </div>
       )}
     </>

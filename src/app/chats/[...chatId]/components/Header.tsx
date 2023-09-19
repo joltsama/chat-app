@@ -1,5 +1,6 @@
 import { IChat, IUser } from "@/schemas";
-import React from "react";
+import { IoIosCall } from "react-icons/io";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import Avatar from "../../../components/Avatar";
 
 interface HeaderProps {
@@ -21,14 +22,24 @@ function Header({ chat }: HeaderProps) {
   const otherUser = getOtherUsers(user, users);
   return (
     <div className="my-4 px-4 inline-flex items-center w-full">
-      <Avatar name={otherUser[0].name} image={otherUser[0].image} />
+      <Avatar
+        isGroup={isGroup}
+        name={otherUser[0].name}
+        image={otherUser[0].image}
+      />
       <div className="text-xl font-semibold">
         {isGroup ? (
           <div className="">{title}</div>
         ) : (
-          <span className="text-stone-900">{otherUser[0].name} </span>
+          <div className="text-stone-900">{otherUser[0].name}</div>
         )}
       </div>
+      <button className="hover:bg-stone-200 p-2 rounded-full ml-auto text-stone-900">
+        <IoIosCall size={20} />
+      </button>
+      <button className="hover:bg-stone-200 p-2 rounded-full ml-2 text-stone-900">
+        <BsThreeDotsVertical size={20} />
+      </button>
     </div>
   );
 }

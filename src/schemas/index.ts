@@ -29,6 +29,7 @@ interface IChat {
   isGroup: boolean;
   createdAt: Date;
   description?: string;
+  image?: string;
 }
 
 interface IThread {

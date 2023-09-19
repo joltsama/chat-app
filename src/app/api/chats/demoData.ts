@@ -130,8 +130,93 @@ export const chats: IChats = {
       },
     ],
   },
+  chat3: {
+    id: "chat3",
+    title: "Friends",
+    users: [
+      {
+        id: "user1",
+        name: "John",
+      },
+      {
+        id: "user2",
+        name: "Lorem",
+      },
+      {
+        id: "user3",
+        name: "Ipsum",
+      },
+    ],
+    isGroup: true,
+    createdAt: new Date(),
+    messages: [
+      {
+        id: "message3.1",
+        seenBy: [
+          {
+            id: "user1",
+            name: "John",
+          },
+          {
+            id: "user2",
+            name: "Lorem",
+          },
+          {
+            id: "user3",
+            name: "Ipsum",
+          },
+        ],
+        body: "Lets go for lunch?",
+        createdAt: new Date(),
+        chat: "chat3",
+        thread: "",
+        sender: {
+          id: "user3",
+          name: "Ipsum",
+        },
+      },
+      {
+        id: "message3.2",
+        seenBy: [
+          {
+            id: "user1",
+            name: "John",
+          },
+          {
+            id: "user3",
+            name: "Ipsum",
+          },
+        ],
+        body: "Sure, when?",
+        createdAt: new Date(),
+        chat: "chat3",
+        thread: "thread3.1",
+        sender: {
+          id: "user1",
+          name: "John",
+        },
+      },
+      {
+        id: "message3.3",
+        seenBy: [
+          {
+            id: "user3",
+            name: "Ipsum",
+          },
+        ],
+        body: "and where?",
+        createdAt: new Date(),
+        chat: "chat1",
+        thread: "",
+        sender: {
+          id: "user3",
+          name: "Ipsum",
+        },
+      },
+    ],
+  },
 };
 
 export const allChats: (IChat & {
   messages: IMessage[];
-})[] = [chats.chat1, chats.chat2];
+})[] = [chats.chat1, chats.chat2, chats.chat3];
