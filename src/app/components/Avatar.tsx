@@ -28,6 +28,7 @@ export default function Avatar({ image, name, isGroup }: AvatarProps) {
             font-medium
           bg-white 
           text-cyan-900 
+            relative
           "
         >
           {isGroup ? (
@@ -35,6 +36,19 @@ export default function Avatar({ image, name, isGroup }: AvatarProps) {
           ) : (
             name.slice(0, 2).toUpperCase()
           )}
+          <span
+            className="
+              absolute
+              rounded-full
+              bg-green-500
+              ring-2
+              ring-white
+              bottom-0
+              right-0
+              h-3
+              w-3
+            "
+          ></span>
         </div>
       )}
     </>
