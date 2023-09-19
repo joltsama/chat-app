@@ -38,6 +38,13 @@ function ThreadWindow({
 
     if (threadId) {
       fetchMessages();
+    } else {
+      setThread({
+        id: "",
+        messages: [],
+        beginningMessageId: initialMessage.id,
+        createdAt: new Date(),
+      });
     }
   }, [threadId]);
 

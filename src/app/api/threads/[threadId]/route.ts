@@ -37,6 +37,39 @@ export async function GET(request: NextApiRequest, { params }: any) {
         },
       ],
     });
+
+  if (threadId === "thread3.1")
+    return NextResponse.json({
+      id: "thread3.1",
+      beginningMessageId: "message3.1",
+      createdAt: new Date(),
+      messages: [
+        {
+          id: "message3.3.1",
+          seenBy: [],
+          body: "Yo",
+          createdAt: new Date(),
+          chat: "chat3",
+          thread: "thread3.1",
+          sender: {
+            id: "user1",
+            name: "John",
+          },
+        },
+        {
+          id: "message3.3.2",
+          seenBy: [],
+          body: "Hows it goin?",
+          createdAt: new Date(),
+          chat: "chat3",
+          thread: "thread3.1",
+          sender: {
+            id: "user2",
+            name: "Lorem",
+          },
+        },
+      ],
+    });
   return NextResponse.json({});
 }
 

@@ -20,8 +20,6 @@ function MessageBox({
   inThread = false,
   onReply,
 }: MessageBoxProps) {
-  console.log("[MessageBox] message:", message);
-
   const userId = "user1";
   const isOwn = message.sender.id === userId;
   // can be fetched from server
