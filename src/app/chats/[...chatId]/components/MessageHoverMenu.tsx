@@ -29,6 +29,7 @@ export default function MessageHoverMenu({
         bg-stone-100
         hover:bg-stone-200 align-top 
         `,
+        "thread-menu",
         own && "text-right"
       )}
     >

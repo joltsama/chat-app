@@ -94,7 +94,7 @@ function ThreadWindow({
   };
 
   return (
-    <div className="border-l h-full">
+    <div id="threadWindow" className="border-l h-full">
       <div className="h-full flex flex-col">
         {/* Heading */}
         <div className="inline-flex items-center my-4 px-4 py-2">
