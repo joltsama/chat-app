@@ -7,7 +7,7 @@ interface UsersListWindowProps {
 
 export default function UsersListWindow({ chats }: UsersListWindowProps) {
   return (
-    <div className="bg-cyan-100 p-4 pr-0 min-h-screen">
+    <div id="usersChatList" className="bg-cyan-100 p-4 pr-0 min-h-screen z-50">
       <div className="text-lg text-stone-950 font-medium py-3 pb-6">
         Contacts
       </div>

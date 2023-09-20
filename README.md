@@ -13,6 +13,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Environment: Ubuntu
+
 Run the development server:
 
 ```bash
@@ -27,3 +29,20 @@ This project uses:
 - react-icons
 
 Assumptions have been made at certain places for API requests and backend data. Callback functions have been used for realtime update of data in different components which would normally be used done using backend/database service subscriptions in different components.
+
+# Tests
+
+Cypress is used for testing.
+In case of os related lib errors please check [guide](https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies)
+
+To run tests in headless cypress runner (no UI)
+
+```
+npm run e2e:headless
+```
+
+To run tests in cypress runner (UI)
+
+```
+npm run e2e
+```
