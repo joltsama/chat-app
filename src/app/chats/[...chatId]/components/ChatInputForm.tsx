@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MessageInput from "./MessageInput";
 import MessageSendButton from "./MessageSendButton";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
@@ -12,7 +12,11 @@ export default function ChatInputForm({
   onSubmit,
   className,
 }: ChatInputFormProps) {
-  const { register, handleSubmit, setValue } = useForm<FieldValues>({
+  useEffect(() => {
+    setFocus("message");
+  }, []);
+
+  const { register, setFocus, handleSubmit, setValue } = useForm<FieldValues>({
     defaultValues: {
       message: "",
     },

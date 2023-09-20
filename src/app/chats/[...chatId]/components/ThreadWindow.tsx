@@ -34,7 +34,6 @@ function ThreadWindow({
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log("threadId", threadId);
     const fetchMessages = async () => {
       const threadDetails: FullThread = await getThread(threadId!);
       console.log("threadDetails", threadDetails);
