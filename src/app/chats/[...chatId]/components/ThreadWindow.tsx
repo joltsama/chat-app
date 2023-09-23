@@ -1,6 +1,5 @@
 "use client";
 
-import getThread from "@/actions/getThread";
 import { IMessage, IThread } from "@/schemas";
 import { useEffect, useRef, useState } from "react";
 import ChatInputForm from "./ChatInputForm";
@@ -9,7 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 
 interface ThreadWindowProps {
   initialMessage: IMessage;
-  threadId?: string;
+  threadId: string;
   onClose: () => void;
   setThreadOnMessage: (_: IMessage) => void;
 }
@@ -24,18 +23,29 @@ function ThreadWindow({
   onClose,
   setThreadOnMessage,
 }: ThreadWindowProps) {
-  const [thread, setThread] = useState<FullThread>({
-    id: "",
+  const emptyThread = {
+    id: threadId,
     messages: [],
     beginningMessageId: initialMessage.id,
     createdAt: new Date(),
-  });
-
+  };
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const [thread, setThread] = useState<FullThread>({
+    ...emptyThread,
+    beginningMessageId: initialMessage.id,
+  });
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const threadDetails: FullThread = await getThread(threadId!);
+      console.log("threadId", threadId);
+      const threadDetails: FullThread = JSON.parse(
+        sessionStorage.getItem(threadId!) ||
+          JSON.stringify({
+            ...emptyThread,
+            beginningMessageId: initialMessage.id,
+          })
+      );
       console.log("threadDetails", threadDetails);
       // no thread details found then reset
       setThread(
@@ -82,10 +92,12 @@ function ThreadWindow({
         },
       });
       console.log("previousMessages", previousMessages);
-      return {
+      const newThreadState = {
         ...prev!,
         messages: previousMessages,
       };
+      sessionStorage.setItem(threadId!, JSON.stringify(newThreadState));
+      return newThreadState;
     });
 
     setThreadOnMessage(initialMessage);

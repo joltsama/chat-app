@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { IMessage } from "@/schemas";
 import { format } from "date-fns";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { GoReply } from "react-icons/go";
 import Avatar from "@/app/components/Avatar";
 import MessageHoverMenu from "./MessageHoverMenu";
@@ -13,7 +13,7 @@ interface MessageBoxProps {
   message: IMessage;
   sameSender?: boolean;
   inThread?: boolean;
-  onReply?: (value: boolean, message: IMessage, threadId: string) => void;
+  onReply?: (showThread: boolean, message: IMessage, threadId: string) => void;
 }
 
 function MessageBox({
@@ -23,9 +23,32 @@ function MessageBox({
   onReply,
 }: MessageBoxProps) {
   // hard coded, can be fetched from server
-  const threadSize = 10;
+  // const threadSize = 10;
   const { id: userId } = useCurrentUser();
   const isOwn = message.sender.id === userId;
+
+  const [threadSize, setThreadSize] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchThreadSize = () => {
+      let threadId;
+      if (message.thread) {
+        threadId = message.thread.toString();
+      } else {
+        threadId = message.chat + message.id;
+      }
+      console.log("message.chat + message.id;", message.chat + message.id);
+      console.log(
+        "sessionStorage.getItem(threadId!)",
+        sessionStorage.getItem(threadId!)
+      );
+      const threadData = JSON.parse(sessionStorage.getItem(threadId!) || "{}");
+      console.log("threadData", threadData);
+      setThreadSize(threadData?.messages?.length || 0);
+    };
+
+    fetchThreadSize();
+  }, []);
 
   const onMouseOver = (e: MouseEvent) => {
     e.currentTarget.lastElementChild?.classList.remove("hidden");
